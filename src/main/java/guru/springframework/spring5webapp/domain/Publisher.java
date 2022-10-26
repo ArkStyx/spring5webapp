@@ -1,14 +1,11 @@
 package guru.springframework.spring5webapp.domain;
 
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,29 +13,34 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Author {
+public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String firstName;
-	private String lastName;
+	private String name;
+	private String address;
+	private String city;
+	private String state;
+	private String zip;
+	private String country;
 	
-	public Author(String firstName, String lastName) {
+	public Publisher(String name, String address, String city, String state, String zip, String country) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.country = country;
 	}
 	
-	@ManyToMany(mappedBy = "authors")
-	private Set<Book> books = new LinkedHashSet<>();
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -47,13 +49,14 @@ public class Author {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Author other = (Author) obj;
+		Publisher other = (Publisher) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", books=" + books + "]";
+		return "Publisher [id=" + id + ", name=" + name + ", address=" + address + ", city=" + city + ", state=" + state
+				+ ", zip=" + zip + ", country=" + country + "]";
 	}
 	
 }

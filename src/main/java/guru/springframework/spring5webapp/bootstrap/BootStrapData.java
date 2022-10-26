@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.domain.Publisher;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
 import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import lombok.AllArgsConstructor;
 
 @Component
@@ -15,12 +17,29 @@ public class BootStrapData implements CommandLineRunner {
 
 	private final AuthorRepository authorRepository;
 	private final BookRepository bookRepository;
+	private final PublisherRepository publisherRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
 		
 		System.out.println("Started in Spring CommandLineRunner");
+
+		addAuthorAndBookEric();
 		
+		System.out.println("01 - Number of authors saved : " + authorRepository.count());
+		System.out.println("01 - Number of books saved : " + bookRepository.count());
+
+		addAuthorAndBookRod();
+		
+		System.out.println("02 - Number of authors saved : " + authorRepository.count());
+		System.out.println("02 - Number of books saved : " + bookRepository.count());
+		
+		addPublisher();
+		
+		System.out.println("03 - Number of publishers saved : " + publisherRepository.count());
+	}
+
+	private void addAuthorAndBookEric() {
 		Author eric = new Author("Eric", "Evans");
 		Book ddd = new Book("Domain Driven Development", "123123");
 		
@@ -29,10 +48,9 @@ public class BootStrapData implements CommandLineRunner {
 		
 		authorRepository.save(eric);
 		bookRepository.save(ddd);
-		
-		System.out.println("01 - Number of authors saved : " + authorRepository.count());
-		System.out.println("01 - Number of books saved : " + bookRepository.count());
-		
+	}
+
+	private void addAuthorAndBookRod() {
 		Author rod = new Author("Rod", "Johnson");
 		Book noEJB = new Book("J2EE development without EJB", "39394594459");
 		
@@ -41,9 +59,12 @@ public class BootStrapData implements CommandLineRunner {
 		
 		authorRepository.save(rod);
 		bookRepository.save(noEJB);
-		
-		System.out.println("02 - Number of authors saved : " + authorRepository.count());
-		System.out.println("02 - Number of books saved : " + bookRepository.count());
 	}
-
+	
+	private void addPublisher() {
+		Publisher ouinOuinPublishing = new Publisher("Ouin-ouin Publishing", "123 fancy street", "Miami", "Florida", "12345", "USA");
+		
+		publisherRepository.save(ouinOuinPublishing);
+	}
+	
 }
