@@ -1,0 +1,49 @@
+package guru.springframework.spring5webapp.bootstrap;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import guru.springframework.spring5webapp.domain.Author;
+import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.repositories.AuthorRepository;
+import guru.springframework.spring5webapp.repositories.BookRepository;
+import lombok.AllArgsConstructor;
+
+@Component
+@AllArgsConstructor
+public class BootStrapData implements CommandLineRunner {
+
+	private final AuthorRepository authorRepository;
+	private final BookRepository bookRepository;
+	
+	@Override
+	public void run(String... args) throws Exception {
+		
+		System.out.println("Started in Spring CommandLineRunner");
+		
+		Author eric = new Author("Eric", "Evans");
+		Book ddd = new Book("Domain Driven Development", "123123");
+		
+		eric.getBooks().add(ddd);
+		ddd.getAuthors().add(eric);
+		
+		authorRepository.save(eric);
+		bookRepository.save(ddd);
+		
+		System.out.println("01 - Number of authors saved : " + authorRepository.count());
+		System.out.println("01 - Number of books saved : " + bookRepository.count());
+		
+		Author rod = new Author("Rod", "Johnson");
+		Book noEJB = new Book("J2EE development without EJB", "39394594459");
+		
+		rod.getBooks().add(noEJB);
+		noEJB.getAuthors().add(rod);
+		
+		authorRepository.save(rod);
+		bookRepository.save(noEJB);
+		
+		System.out.println("02 - Number of authors saved : " + authorRepository.count());
+		System.out.println("02 - Number of books saved : " + bookRepository.count());
+	}
+
+}
