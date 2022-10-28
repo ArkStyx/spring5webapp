@@ -25,6 +25,10 @@ public class Author {
 	private String firstName;
 	private String lastName;
 	
+	public Author() {
+		super();
+	}
+	
 	public Author(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
@@ -53,7 +57,9 @@ public class Author {
 
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", books=" + books + "]";
+		return "Author [id=" + id + ", "
+				+ "firstName=" + firstName + ", "
+				+ "lastName=" + lastName + "]";
 	}
 	
 }

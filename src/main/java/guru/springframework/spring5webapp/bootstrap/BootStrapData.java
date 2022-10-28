@@ -24,47 +24,42 @@ public class BootStrapData implements CommandLineRunner {
 		
 		System.out.println("Started in Spring CommandLineRunner");
 
-		addAuthorAndBookEric();
+		Author eric = new Author("Eric", "Evans");
+		Book ddd = new Book("Domain Driven Development", "123123");
+		addAuthorAndBook(eric, ddd);
 		
 		System.out.println("01 - Number of authors saved : " + authorRepository.count());
 		System.out.println("01 - Number of books saved : " + bookRepository.count());
 
-		addAuthorAndBookRod();
+		Author rod = new Author("Rod", "Johnson");
+		Book noEJB = new Book("J2EE development without EJB", "39394594459");
+		addAuthorAndBook(rod, noEJB);
 		
 		System.out.println("02 - Number of authors saved : " + authorRepository.count());
 		System.out.println("02 - Number of books saved : " + bookRepository.count());
 		
-		addPublisher();
+		Publisher ouinOuinPublishing = new Publisher("Ouin-ouin Publishing", "123 fancy street", "Miami", "Florida", "12345", "USA");
+		addPublisherAndBook(ouinOuinPublishing, ddd);
+		addPublisherAndBook(ouinOuinPublishing, noEJB);
 		
 		System.out.println("03 - Number of publishers saved : " + publisherRepository.count());
+		System.out.println("03 - Number of books published saved : " + ouinOuinPublishing.getBooks().size());
 	}
 
-	private void addAuthorAndBookEric() {
-		Author eric = new Author("Eric", "Evans");
-		Book ddd = new Book("Domain Driven Development", "123123");
+	private void addAuthorAndBook(Author author, Book book) {
+		author.getBooks().add(book);
+		authorRepository.save(author);
 		
-		eric.getBooks().add(ddd);
-		ddd.getAuthors().add(eric);
-		
-		authorRepository.save(eric);
-		bookRepository.save(ddd);
-	}
-
-	private void addAuthorAndBookRod() {
-		Author rod = new Author("Rod", "Johnson");
-		Book noEJB = new Book("J2EE development without EJB", "39394594459");
-		
-		rod.getBooks().add(noEJB);
-		noEJB.getAuthors().add(rod);
-		
-		authorRepository.save(rod);
-		bookRepository.save(noEJB);
+		book.getAuthors().add(author);
+		bookRepository.save(book);
 	}
 	
-	private void addPublisher() {
-		Publisher ouinOuinPublishing = new Publisher("Ouin-ouin Publishing", "123 fancy street", "Miami", "Florida", "12345", "USA");
+	private void addPublisherAndBook(Publisher publisher, Book book) {
+		publisher.getBooks().add(book);
+		publisherRepository.save(publisher);
 		
-		publisherRepository.save(ouinOuinPublishing);
+		book.setPublisher(publisher);
+		bookRepository.save(book);
 	}
 	
 }

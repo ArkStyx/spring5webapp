@@ -11,11 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -28,6 +27,13 @@ public class Book {
 	
 	private String title;
 	private String isbn;
+	
+	@ManyToOne
+	private Publisher publisher;
+	
+	public Book() {
+		super();
+	}
 	
 	public Book(String title, String isbn) {
 		super();
@@ -58,7 +64,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + ", authors=" + authors + "]";
+		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + "]";
 	}
 
 }
